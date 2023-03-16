@@ -5,7 +5,7 @@ import Header from "./components/Header/Header"
 export const InputContext = createContext();
 
 function App() {
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState();
   const [data, setData] = useState([]);
 
   const value = {
@@ -18,8 +18,6 @@ function App() {
     .then(data => setData(data))
     .catch((err) => console.log(err));
   }, [inputValue])
-
-  
   
   return (
     <InputContext.Provider value={value}>
