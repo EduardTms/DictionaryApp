@@ -40,7 +40,6 @@ const Header = ({ data }) => {
                         {data.title === 'No Definitions Found' ? <p className="italic text-fuchsia-400 font-semibold mb-3">{data.title}</p> : <p className="italic text-fuchsia-400 font-semibold mb-3">{data[0].phonetic}</p>}
                     </>
                 ) }
-                <hr />
                 </div>
         </div>
     )

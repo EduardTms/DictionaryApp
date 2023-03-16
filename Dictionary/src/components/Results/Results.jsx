@@ -42,7 +42,7 @@ const Results = ({ data }) => {
             <div className="verb mt-5">
                 {inputValue != undefined && (
                     <>
-                        {data.length === 0 && !data[0].meanings[1] ? <h2 className="inline-block mr-4 text-2xl font-semibold">{data[0].meanings[1].partOfSpeech}</h2> : ''}
+                        {data && data[0].meanings.length <= 1  ? ' ' : <h2 className="inline-block mr-4 text-2xl font-semibold">{data[0].meanings[1].partOfSpeech}</h2>}
                     </>
                 )}
                 <hr className="inline-block w-10/12 mb-1" />
