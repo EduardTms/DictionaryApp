@@ -42,21 +42,22 @@ const Results = ({ data }) => {
             <div className="verb mt-5">
                 {inputValue != undefined && (
                     <>
-                        {data && data >= 1 ? <h2 className="inline-block mr-4 text-2xl font-semibold">{data[0].meanings[1].partOfSpeech}</h2> : ''}
-                         <hr className="inline-block w-10/12 mb-1" />
+                        {data.length === 0 && !data[0].meanings[1] ? <h2 className="inline-block mr-4 text-2xl font-semibold">{data[0].meanings[1].partOfSpeech}</h2> : ''}
                     </>
                 )}
+                <hr className="inline-block w-10/12 mb-1" />
             </div>
             <div className="meaning">
                 {data ? <p className="mt-8 text-gray-400 text-lg font-semibold">Meaning</p> : ''}
                 {inputValue != undefined && (
                     <>
-                        { data >= 1 && data[0].meanings.length >= 1 ? data[0].meanings[1].definitions.slice(0, 3).map((def, i) => {
+                        {data.title === 'No Definitions Found' ? ''
+                            : data.length === 0 || data[0].meanings[1] === undefined ? ' ' : data[0].meanings[1].definitions.slice(0, 3).map((def, i) => {
                             return <>
                                 <li key={i} className="mx-10 mt-8 text-purple-500"><span className="text-black inline">{def.definition}</span></li>
-                                {def.example != undefined ? <li key={i + 10} className="mx-16 mt-2 text-gray-500 list-none">{`"${def.example}"`}</li> : ''}
+                                {def.example != undefined ? <li key={i + 3} className="mx-16 mt-2 text-gray-500 list-none">{`"${def.example}"`}</li> : ''}
                             </>
-                            }) : ''                       
+                            })                      
                          } 
                     </>
                     )} 
@@ -64,7 +65,7 @@ const Results = ({ data }) => {
             <hr className="my-8 w-10/12" />
             {inputValue != undefined && (
                 <>
-                    {data >= 1 && data[0].sourceUrls != undefined ? <p className="py-5 text-gray-400 text-lg font-semibold">Source: <a className="pl-5" href={data[0].sourceUrls}>{data[0].sourceUrls}</a></p> : ''}
+                    {<p className="py-5 text-gray-400 text-lg font-semibold">Source: <a className="pl-5" href={`https://en.wiktionary.org/wiki/${inputValue}`}>{`https://en.wiktionary.org/wiki/${inputValue}`}</a></p>}
                 </>
             )}
             </div>
