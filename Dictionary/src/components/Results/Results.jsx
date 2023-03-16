@@ -42,6 +42,7 @@ const Results = ({ data }) => {
             <div className="verb mt-5">
                 {inputValue != undefined && (
                     <>
+                        {/* TODO: Fix bug where searching for wrong word is crashing */}
                         {data && data[0].meanings.length <= 2  ? ' ' : <h2 className="inline-block mr-4 text-2xl font-semibold">{data[0].meanings[1].partOfSpeech}</h2>}
                     </>
                 )}
