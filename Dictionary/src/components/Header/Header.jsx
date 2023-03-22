@@ -37,9 +37,11 @@ const Header = ({ data }) => {
                 { inputValue && (
                     <>
                         <h1 className="my-5 text-6xl font-bold font-mono">{inputValue}</h1>
-                        {data.title === 'No Definitions Found' ? <p className="italic text-fuchsia-400 font-semibold mb-3">{data.title}</p> : <p className="italic text-fuchsia-400 font-semibold mb-3">{data[0].phonetic}</p>}
+                        {data.title === 'No Definitions Found'
+                            ? <p className="italic text-fuchsia-400 font-semibold mb-3">{data.title}</p>
+                            : <p className="italic text-fuchsia-400 font-semibold mb-3">{data[0].phonetic}</p>}
                     </>
-                ) }
+                )}
                 </div>
         </div>
     )
