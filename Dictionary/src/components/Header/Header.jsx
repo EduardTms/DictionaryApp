@@ -11,13 +11,11 @@ const Header = ({ data }) => {
 
     const handleClick = () => {
         setInputValue(value);
-        setValue('');
     }
 
     const handleInputKeyDown = (e) => {
         if (e.key === 'Enter') {
             setInputValue(value);
-            setValue('');
         } 
     }
 

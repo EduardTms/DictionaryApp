@@ -11,9 +11,10 @@ const Results = ({ data }) => {
                 {inputValue != undefined && (
                     <>
                         {/* if data array length is atleast 1, display the first partOfSpeech  --- No need for further ifs */}
-                        {data.length >= 1
-                            ? <h2 className="inline-block mr-4 text-2xl font-semibold">{data[0].meanings[0].partOfSpeech}</h2>
-                            : ''}
+                        {data.title
+                            ? ''
+                            : <h2 className="inline-block mr-4 text-2xl font-semibold">{data[0].meanings[0].partOfSpeech}</h2>
+                        }
                         
                         <hr className="inline-block w-10/12 mb-1" />
                     </>
@@ -24,8 +25,8 @@ const Results = ({ data }) => {
                 {/* if input value exists */}
                 {inputValue != undefined && (
                     <>
-                        <p className="mt-8 text-gray-400 text-lg font-semibold">Meaning</p>
                         {/* if data.title is atleast 1, it renders 'not found' else map through the meanings and render the first 3 results */}
+                        <p className="mt-8 text-gray-400 text-lg font-semibold">Meaning</p>
                         {data.title === 'No Definitions Found'
                             ? data.message
                             : data[0].meanings[0].definitions.slice(0,3).map((def,i) => {
@@ -44,7 +45,7 @@ const Results = ({ data }) => {
                 <>
                     <p className="mt-8 text-gray-400 text-lg font-semibold inline-block ml-15">Synonyms: </p>
                     {/* if synonyms array length is 0 display synonyms else 404   */}
-                    {data[0].meanings[0].synonyms.length === 0
+                    {data.title
                         ? <p className="text-purple-500 font-semibold mx-5 inline">No synonyms found</p>
                         : data[0].meanings[0].synonyms.slice(0,3).map((syn, i) => {
                             return <span key={i} className="text-purple-500 mx-3 font-bold text-lg">{syn}</span>
@@ -57,7 +58,7 @@ const Results = ({ data }) => {
                 {inputValue != undefined && (
                     <>
                         {/* TODO: Fix bug where searching for wrong word is crashing */}
-                        {data[0].meanings.length < 2
+                        {data.title || data[0].meanings.length < 2
                             ? ''
                             : <h2 className="inline-block mr-4 text-2xl font-semibold">{data[0].meanings[1].partOfSpeech}</h2>
                         }
@@ -67,21 +68,19 @@ const Results = ({ data }) => {
         
             </div>
 
-            <div className="meaning">
-                {data.length >= 1 && data[0].meanings.length < 2
-                    ? ''
-                    : <p className="mt-8 text-gray-400 text-lg font-semibold">Meaning</p>
-                }
-                
+            <div className="meaning">     
                 {/* if input value exists */}
                 {inputValue != undefined && (
                     <>
-                        {/* if data.title exists */}
+                        <p className="mt-8 text-gray-400 text-lg font-semibold">Meaning</p>
+                        {/* if data.title exists, no definition has been found */}
                         {data.title
                             ? ''
-                            : data.length === 0 || data[0].meanings[1] === undefined
-                                ? ' ' : data[0].meanings[1].definitions.slice(0, 3).map((def, i) => {
-                            return <>
+                            : data[0].meanings.length < 2
+                                ? ''
+                                : data[0].meanings[1].definitions.slice(0, 3).map((def, i) => {
+                                    return <>
+                                {/* word definitions */}
                                 <li key={i} className="mx-10 mt-8 text-purple-500">
                                     <span className="text-black inline">{def.definition}</span>
                                 </li>
@@ -89,7 +88,8 @@ const Results = ({ data }) => {
                                 {/* if example exists display example else display nothing */}
                                 {def.example != undefined
                                     ? <li key={i + 3} className="mx-16 mt-2 text-gray-500 list-none">{`"${def.example}"`}</li>
-                                    : ''}
+                                    : ''
+                                }
                                 </>
                             })                      
                          } 
@@ -98,8 +98,20 @@ const Results = ({ data }) => {
             </div>
             {inputValue != undefined && (
                 <>
-                    <hr className="my-8 w-10/12" />
-                    {<p className="py-5 text-gray-400 text-lg font-semibold">Source: <a className="pl-5" href={`https://en.wiktionary.org/wiki/${inputValue}`}>{`https://en.wiktionary.org/wiki/${inputValue}`}</a></p>}
+                    {/* if data.title exists, no definition has been found */}
+                    {data.title
+                        ? ''
+                        :
+                        <> 
+                            <hr className="my-8 w-10/12" />
+                            <p className="py-5 text-gray-400 text-lg font-semibold">Source:
+                                <a className="pl-5" href={`https://en.wiktionary.org/wiki/${inputValue}`}>
+                                    {`https://en.wiktionary.org/wiki/${inputValue}`}
+                                </a>
+                            </p>
+                        </>
+                    }
+                    
                 </>
             )}
             </>

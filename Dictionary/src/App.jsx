@@ -7,7 +7,6 @@ export const InputContext = createContext();
 function App() {
   const [inputValue, setInputValue] = useState();
   const [data, setData] = useState([]);
-  
   const URL = `https://api.dictionaryapi.dev/api/v2/entries/en/${inputValue}`
 
   const value = {
