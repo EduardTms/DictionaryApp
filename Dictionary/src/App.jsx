@@ -7,17 +7,19 @@ export const InputContext = createContext();
 function App() {
   const [inputValue, setInputValue] = useState();
   const [data, setData] = useState([]);
+  
+  const URL = `https://api.dictionaryapi.dev/api/v2/entries/en/${inputValue}`
 
   const value = {
     inputValue, setInputValue
   }
 
   useEffect(() => {
-    const dictionaryFetch = fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${inputValue}`)
+    const dictionaryFetch = fetch(URL)
     .then(response => response.json())
     .then(data => setData(data))
     .catch((err) => console.log(err));
-  }, [inputValue])
+  }, [URL])
   
   return (
     <InputContext.Provider value={value}>
