@@ -25,9 +25,9 @@ const Results = ({ data }) => {
                 {/* if input value exists */}
                 {inputValue != undefined && (
                     <>
-                        {/* if data.title is atleast 1, it renders 'not found' else map through the meanings and render the first 3 results */}
                         <p className="mt-8 text-gray-400 text-lg font-semibold">Meaning</p>
-                        {data.title === 'No Definitions Found'
+                        {/* if data.title exists, it renders 'no def found' else map through the meanings and render the first 3 results */}
+                        {data.title
                             ? data.message
                             : data[0].meanings[0].definitions.slice(0,3).map((def,i) => {
                                 return (
@@ -45,7 +45,7 @@ const Results = ({ data }) => {
                 <>
                     <p className="mt-8 text-gray-400 text-lg font-semibold inline-block ml-15">Synonyms: </p>
                     {/* if synonyms array length is 0 display synonyms else 404   */}
-                    {data.title
+                    {data.title || data[0].meanings[0].synonyms.length === 0
                         ? <p className="text-purple-500 font-semibold mx-5 inline">No synonyms found</p>
                         : data[0].meanings[0].synonyms.slice(0,3).map((syn, i) => {
                             return <span key={i} className="text-purple-500 mx-3 font-bold text-lg">{syn}</span>
@@ -62,18 +62,26 @@ const Results = ({ data }) => {
                             ? ''
                             : <h2 className="inline-block mr-4 text-2xl font-semibold">{data[0].meanings[1].partOfSpeech}</h2>
                         }
-                        <hr className="inline-block w-10/12 mb-1" />
+                        {/* <hr className="inline-block w-10/12 mb-1" /> */}
                     </>
                 )}
         
             </div>
 
-            <div className="meaning">     
+            <div className="meaning">
                 {/* if input value exists */}
                 {inputValue != undefined && (
                     <>
-                        <p className="mt-8 text-gray-400 text-lg font-semibold">Meaning</p>
-                        {/* if data.title exists, no definition has been found */}
+                        {/* if data.title exists or if meanings array length is less than 2 it won't display meaning and the hr */}
+                        {data.title || data[0].meanings.length < 2
+                            ? ''
+                            : <>
+                                <hr className="inline-block w-10/12 mb-1" />
+                                <p className="mt-8 text-gray-400 text-lg font-semibold">Meaning</p> 
+                            </>
+                        }
+
+                        {/* if data.title exists, it renders 'no def found' else map through the meanings and render the first 3 results */}
                         {data.title
                             ? ''
                             : data[0].meanings.length < 2
